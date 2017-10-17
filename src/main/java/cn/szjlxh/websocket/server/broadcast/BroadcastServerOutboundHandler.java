@@ -12,7 +12,7 @@ public class BroadcastServerOutboundHandler extends ChannelOutboundHandlerAdapte
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
         System.out.println(msg.toString());
-        ByteBuf buf = Unpooled.copiedBuffer(msg.toString(), CharsetUtil.UTF_8);
+        ByteBuf buf = Unpooled.copiedBuffer("#" + msg.toString() + "#", CharsetUtil.UTF_8);
         ctx.write(buf);
         ctx.flush();
     }

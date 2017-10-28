@@ -1,6 +1,6 @@
-package cn.szjlxh.websocket.server.broadcast;
+package cn.szjlxh.push.server.broadcast;
 
-import cn.szjlxh.websocket.server.util.Configuration;
+import cn.szjlxh.push.server.util.Configuration;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 
-public class BroadcastServer {
+public class Broadcast {
 
     private Configuration configuration;
 
-    private static final Logger log = LoggerFactory.getLogger("BroadcastServer");
+    private static final Logger log = LoggerFactory.getLogger(Broadcast.class);
 
-    public BroadcastServer(Configuration configuration) {
+    public Broadcast(Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -31,7 +31,7 @@ public class BroadcastServer {
         ServerBootstrap bootstrap = new ServerBootstrap().group(bossGroup, workerGroup);
 
         bootstrap.channel(NioServerSocketChannel.class)
-                .childHandler(new BroadcastServerInitializer())
+                .childHandler(new BroadcastInitializer())
                 .option(ChannelOption.SO_BACKLOG, 128)
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
 

@@ -1,4 +1,4 @@
-package cn.szjlxh.websocket.server.broadcast;
+package cn.szjlxh.push.server.broadcast;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -7,7 +7,7 @@ import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 import io.netty.util.CharsetUtil;
 
-public class BroadcastServerOutboundHandler extends ChannelOutboundHandlerAdapter {
+public class BroadcastOutboundHandler extends ChannelOutboundHandlerAdapter {
 
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {

@@ -1,7 +1,10 @@
-package cn.szjlxh.websocket.server.broadcast;
+package cn.szjlxh.push.server.broadcast;
 
-import cn.szjlxh.websocket.server.broadcast.message.PushMsg;
-import cn.szjlxh.websocket.server.util.PushServerUtil;
+import cn.szjlxh.push.server.broadcast.dal.PushDal;
+import cn.szjlxh.push.server.broadcast.message.PushMsg;
+import cn.szjlxh.push.server.broadcast.message.ThreeDMsg;
+import cn.szjlxh.push.server.util.PushServerUtil;
+import cn.szjlxh.push.server.util.ThreeDConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.netty.buffer.ByteBuf;
@@ -11,7 +14,7 @@ import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BroadcastServerChannelInBoundHandler extends ChannelInboundHandlerAdapter {
+public class BroadcastInBoundHandler extends ChannelInboundHandlerAdapter {
 
     private static Gson gson = new GsonBuilder().create();
 
@@ -21,8 +24,6 @@ public class BroadcastServerChannelInBoundHandler extends ChannelInboundHandlerA
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         /**
-         *
-         *  {"channelId":"saddasdhjsahdjash","data":""}
          *
          **/
 
@@ -34,14 +35,17 @@ public class BroadcastServerChannelInBoundHandler extends ChannelInboundHandlerA
 
             String message = buf.toString(CharsetUtil.UTF_8);
 
+            log.info("receive the message : " + message);
+
             PushMsg pushMsg = gson.fromJson(message, PushMsg.class);
 
-            if(pushMsg == null)
+            if (pushMsg == null)
                 return;
 
-            log.info("receive the message : " + pushMsg);
-
-            PushServerUtil.noticeMessage(pushMsg, ctx.channel());
+            if ("ssha".equals(pushMsg.getChannelId())) {
+                ThreeDMsg threeDMsg = pushMsg.getData();
+                PushServerUtil.pushMsg(ThreeDConfig.threeDAPI, threeDMsg, PushDal.getInstance());
+            }
 
             buf.release();
         } else {

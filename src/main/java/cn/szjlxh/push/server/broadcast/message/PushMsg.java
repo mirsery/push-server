@@ -1,8 +1,8 @@
-package cn.szjlxh.websocket.server.broadcast.message;
+package cn.szjlxh.push.server.broadcast.message;
 
 public class PushMsg {
     private String channelId;
-    private String data;
+    private ThreeDMsg data;
     private int id;
 
     public int getId() {
@@ -21,11 +21,11 @@ public class PushMsg {
         this.channelId = channelId;
     }
 
-    public String getData() {
+    public ThreeDMsg getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(ThreeDMsg data) {
         this.data = data;
     }
 

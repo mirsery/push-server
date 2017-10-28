@@ -1,4 +1,4 @@
-package cn.szjlxh.websocket.server.util;
+package cn.szjlxh.push.server.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,8 +9,13 @@ import java.util.Properties;
 public class Configuration {
 
     private int broadcastServerPort;
-    private int audienceServerPort;
-    private String[] channels;
+
+    private String url;
+    private String userName;
+    private String password;
+
+    private int recoverTime;
+
 
     public Configuration(String file) {
         Properties properties = new Properties();
@@ -22,8 +27,12 @@ public class Configuration {
             }
 
             this.broadcastServerPort = Integer.valueOf(properties.getProperty("BroadcastServerPort"));
-            this.audienceServerPort = Integer.valueOf(properties.getProperty("AudienceServerPort"));
-            this.channels = properties.getProperty("channels").split(":");
+            this.url = properties.getProperty("url");
+            this.userName = properties.getProperty("userName");
+            this.password = properties.getProperty("password");
+            ThreeDConfig.threeDAPI = properties.getProperty("threeDAPI");
+            this.recoverTime = Integer.valueOf(properties.getProperty("recoverTime"));
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -35,11 +44,19 @@ public class Configuration {
         return broadcastServerPort;
     }
 
-    public int getAudienceServerPort() {
-        return audienceServerPort;
+    public String getUrl() {
+        return url;
     }
 
-    public String[] getChannels() {
-        return channels;
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getRecoverTime() {
+        return recoverTime;
     }
 }

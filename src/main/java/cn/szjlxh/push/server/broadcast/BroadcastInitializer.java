@@ -1,4 +1,4 @@
-package cn.szjlxh.websocket.server.broadcast;
+package cn.szjlxh.push.server.broadcast;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelInitializer;
@@ -7,7 +7,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.util.CharsetUtil;
 
-public class BroadcastServerInitializer extends ChannelInitializer<SocketChannel> {
+public class BroadcastInitializer extends ChannelInitializer<SocketChannel> {
 
     protected void initChannel(SocketChannel ch) throws Exception {
 
@@ -16,9 +16,9 @@ public class BroadcastServerInitializer extends ChannelInitializer<SocketChannel
         pipeline.addLast("delimiter", new DelimiterBasedFrameDecoder(1024 * 60, Unpooled.copiedBuffer("#", CharsetUtil.UTF_8),
                 Unpooled.copiedBuffer("#", CharsetUtil.UTF_8)));
 
-        pipeline.addLast(new BroadcastServerChannelInBoundHandler());
+        pipeline.addLast(new BroadcastInBoundHandler());
 
-        pipeline.addLast(new BroadcastServerOutboundHandler());
+        pipeline.addLast(new BroadcastOutboundHandler());
 
     }
 }
